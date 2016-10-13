@@ -1,0 +1,11 @@
+#canvas {
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+  height: 85%;
+  width: 80%;
+  position: relative;
+  margin-left: 9%;
+  margin-right: 10%;
+  margin-top: 6%;
+}
