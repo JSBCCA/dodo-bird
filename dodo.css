@@ -2,11 +2,11 @@
   border-style: solid;
   border-width: thin;
   border-color: black;
-  height: 85%;
-  width: 80%;
+  height: 100%;
+  width: 50%;
   position: relative;
-  margin-left: 9%;
-  margin-right: 10%;
-  margin-top: 6%;
+  margin-left: 24%;
+  margin-right: 25%;
+  margin-bottom: 5%;
   background: rgb(100, 197, 251);
 }
