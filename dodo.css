@@ -1,12 +1,30 @@
-#canvas {
+
+body {
+  background-size: 100%;
+  background-color: rgb(95, 186, 252);
+}
+h1 {
+  color: yellow;
+  font-size: 250%;
   border-style: solid;
+  border-width: 7px;
+  background-color: transparent;
+  border-color: yellow;
+}
+p {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+#tablecenter {
+  margin-top: 4%;
+}
+#tablein {
+  width: 100%;
+}
+#top {
+  margin-top: 3%;
+}
+.imgwidth {
+  border-style: solid;;
   border-width: thin;
-  border-color: black;
-  /*height: 100%;
-  width: 50%;*/
-  position: relative;
-  margin-left: 24%;
-  margin-right: 25%;
-  margin-bottom: 5%;
-  background: rgb(100, 197, 251);
+  border-color: white;
 }
