@@ -6,6 +6,7 @@
 
 
 var game = {
+  time: 1000,
   dodo_pos: 4,
   pipe_pos: [null, null, null, null, null, null, null, null],
   columns: [[null, null, null, null, null, null, null, null],
@@ -93,8 +94,16 @@ var game = {
     } else {
       return "img/blue.png";
     }
+  },
+
+  loop: function() {
+    this.move_pipes_up();
+    setTimeout(function () {
+      game.loop();
+    }, this.time);
   }
 };
+
 $(document).keydown(function (e) {
     switch(e.which) {
         case 37: // left
@@ -110,5 +119,7 @@ $(document).keydown(function (e) {
   e.preventDefault(); // prevent the default action (scroll / move caret)
 });
 
-setInterval(function () { game.move_pipes_up() }, 700)
+setInterval(function() { game.time = Math.max(game.time - 20, 550) }, 2800);
+
+game.loop();
 
