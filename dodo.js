@@ -79,5 +79,8 @@ $(document).keydown(function (e) {
         default: return; // exit this handler for other keys
   }
   e.preventDefault(); // prevent the default action (scroll / move caret)
-})
+});
+
+setInterval(game.move_pipes_up(), 700);
+setInterval(game.generate_pipes(), 700)
 
