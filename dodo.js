@@ -7,6 +7,7 @@
 
 var game = {
   dodo_pos: 4,
+  pipe_pos: [2, null, null, 3, null, null, 1, 1],
   columns: [[null, null, null, null, null, null, null, null],
             [null, null, null, null, null, null, null, null],
             [null, null, null, null, null, null, null, null],
@@ -33,10 +34,22 @@ var game = {
     this.draw();
   },
 
+  generate_pipes: function() {
+    ['pipe', 'null', 'null', 'pipe', 'pipe', 'pipe']
+  },
+
+  move_pipes_up: function () {
+    var i = this.dodo_pos;
+    this.columns[pos_x][pos_y] = null;
+    this.columns[pos_x][pos_y + 1] = "pipe";
+    // this.pipe_pos = pos_y + 1;
+    this.draw();
+  },
+
   draw: function () {
     for (i = 0; i < 9; i++) {
       for (j = 0; j < 8; j++) {
-          item = $('#tablecenter').children("div")[7 -j];
+          item = $('#tablecenter').children("div")[7 - j];
           kid = $(item).children("img")[i];
           $(kid).attr("src", this.image_for(this.columns[i][j]));
       }
@@ -66,5 +79,5 @@ $(document).keydown(function (e) {
         default: return; // exit this handler for other keys
   }
   e.preventDefault(); // prevent the default action (scroll / move caret)
-});
+})
 
