@@ -119,7 +119,7 @@ $(document).keydown(function (e) {
   e.preventDefault(); // prevent the default action (scroll / move caret)
 });
 
-setInterval(function() { game.time = Math.max(game.time - 1000, 0) }, 2800);
+setInterval(function() { game.time = Math.max(game.time - 20, 550) }, 2800);
 
 game.loop();
 
