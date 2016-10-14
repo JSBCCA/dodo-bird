@@ -7,7 +7,7 @@
 
 var game = {
   dodo_pos: 4,
-  pipe_pos: [2, null, null, 3, null, null, 1, 1],
+  pipe_pos: [null, null, null, null, null, null, null, null],
   columns: [[null, null, null, null, null, null, null, null],
             [null, null, null, null, null, null, null, null],
             [null, null, null, null, null, null, null, null],
@@ -34,15 +34,44 @@ var game = {
     this.draw();
   },
 
-  generate_pipes: function() {
-    ['pipe', 'null', 'null', 'pipe', 'pipe', 'pipe']
+  generate_pipe: function() {
+    if (this.pipe_pos[0] === null && this.pipe_pos[1] === null) {
+      return 1 + Math.floor(Math.random() * 6);
+    } else {
+      return null;
+    }
+  },
+
+  clear_pipe: function (row) {
+    for (var col = 0; col < this.columns.length; col++) {
+      if (this.columns[col][row] == "pipe")
+        this.columns[col][row] = null;
+    }
+  },
+
+  add_pipe: function (row, size) {
+    for (var col = 0; col < size; col++) {
+      this.columns[col][row] = "pipe";
+    }
+    for (var col = size + 2; col < this.columns[0].length + 1; col++) {
+      this.columns[col][row] = "pipe";
+    }
+  },
+
+  update_column_pipes: function() {
+    for (var row = 0; row < this.columns[0].length; row++) {
+      if (this.pipe_pos[row] < 1) {
+        this.clear_pipe(row);
+      } else {
+        this.add_pipe(row, this.pipe_pos[row]);
+      }
+    }
   },
 
   move_pipes_up: function () {
-    var i = this.dodo_pos;
-    this.columns[pos_x][pos_y] = null;
-    this.columns[pos_x][pos_y + 1] = "pipe";
-    // this.pipe_pos = pos_y + 1;
+    this.pipe_pos.pop();
+    this.pipe_pos.unshift(this.generate_pipe());
+    this.update_column_pipes();
     this.draw();
   },
 
@@ -81,6 +110,5 @@ $(document).keydown(function (e) {
   e.preventDefault(); // prevent the default action (scroll / move caret)
 });
 
-setInterval(game.move_pipes_up(), 700);
-setInterval(game.generate_pipes(), 700)
+setInterval(function () { game.move_pipes_up() }, 700)
 
