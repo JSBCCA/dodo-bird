@@ -1,63 +1,42 @@
-// var game = {
-//   whose_turn: "P1",
-//   columns: [[null, null, null, null, null, null],
-//             [null, null, null, null, null, null],
-//             [null, null, null, null, null, null],
-//             [null, null, null, null, null, null],
-//             [null, null, null, null, null, null],
-//             [null, null, null, null, null, null],
-//             [null, null, null, null, null, null]],
-//
-//   drop: function (column_i) {
-//     var lowest = this.columns[column_i].indexOf(null);
-//     if (this.whose_turn === "P1") {
-//       this.columns[column_i][lowest] = "red";
-//     } else {
-//       this.columns[column_i][lowest] = "blue";
-//     }
-//     var td_to_change = document.getElementsByClassName('connect4_row')[this.columns[column_i].length -1 - lowest].getElementsByTagName("img")[column_i];
-//     if (this.whose_turn === "P1") {
-//       td_to_change.src = "assets/bird.png";
-//       this.whose_turn = "P2";
-//     } else {
-//       td_to_change.src = "assets/pipe.png";
-//       this.whose_turn = "P1";
-//     }
-//     var count = 0;
-//     for (var i = 0; i < this.columns.length; i++) {
-//       for (var j = 0; j < this.columns[i].length; j++) {
-//         if (this.columns[i][j] !== null) {
-//           count += 1;
-//         }
-//       }
-//     }
-//     if (this.verti(column_i, lowest) || this.hori(column_i, lowest) ||
-//     this.left_dia(column_i, lowest) || this.right_dia(column_i, lowest)) {
-//       if (this.whose_turn === 'P2') {
-//         document.getElementById('name').innerText = "Player 1 Wins!";
-//         $('.bn').attr("onclick", "");
-//         $('.bn').attr("src", "img/pureblack.jpg");
-//         return 0;
-//       }
-//       else {
-//         document.getElementById('name').innerText = "Player 2 Wins!";
-//         $('.bn').attr("onclick", "");
-//         $('.bn').attr("src", "img/pureblack.jpg");
-//         return 0;
-//       }
-//     }
-//     console.log(count);
-//     if (count === 42) {
-//       document.getElementById('name').innerText = "Game Over";
-//       return 0;
-//     }
-//     if (this.whose_turn === 'P2') {
-//       $('#red').css('visibility', 'hidden');
-//       $('#blue').css('visibility', 'visible');
-//     }
-//     else {
-//       $('#red').css('visibility', 'visible');
-//       $('#blue').css('visibility', 'hidden');
-//     }
-//   }
-// }
+// image replace on left/right movement
+// move pipes
+// randomly generate pipes in correct position
+// collision
+// reset on collision
+// show score?
+
+
+var game = {
+  dodo_pos: 4,
+  columns: [[null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, "dodo", null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null]],
+
+  move_dodo_left: function () {
+    var i = this.dodo_pos;
+    this.columns[i][6] = null;
+    this.columns[i - 1][6] = "dodo";
+    this.draw();
+  },
+
+  move_dodo_right: function () {
+    var i = this.dodo_pos;
+    this.columns[i][6] = null;
+    this.columns[i + 1][6] = "dodo";
+    this.draw();
+  },
+
+  draw: function () {
+    for i in columns:
+      for j in columns:
+          item = $('#tablecenter').children("div")[i]
+          kid = item.children("img")[j]
+          kid.attr("src", "img/???.png")
+}}
+
