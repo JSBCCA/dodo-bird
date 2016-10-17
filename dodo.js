@@ -1,6 +1,5 @@
 // show score
 
-
 var game = {
   time: 1000,
   dodo_pos: 4,
