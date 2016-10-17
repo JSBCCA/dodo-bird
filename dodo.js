@@ -74,7 +74,8 @@ var game = {
 
   add_score: function() {
     var i = this.dodo_pos;
-    if ((this.columns[i + 1][6] === 'pipe') || (this.columns[i - 1][6] === 'pipe')) {
+    if (( i < (this.columns.length - 1) && this.columns[i + 1][6] === 'pipe')
+        || ( i > 0 && this.columns[i - 1][6] === 'pipe')) {
       this.score++;
     }
   },
