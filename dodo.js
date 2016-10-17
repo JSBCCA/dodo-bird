@@ -1,4 +1,3 @@
-// collision
 // show score
 
 
@@ -56,15 +55,21 @@ var game = {
 
   add_pipe: function (row, size) {
     for (var col = 0; col < size; col++) {
-      this.columns[col][row] = "pipe";
       if (this.columns[col][row] === "dodo") {
         this.reset_game();
+        throw "reset";
+      }
+      else {
+      this.columns[col][row] = "pipe";
       }
     }
     for (var col = size + 2; col < this.columns[0].length + 1; col++) {
-      this.columns[col][row] = "pipe";
       if (this.columns[col][row] === "dodo") {
         this.reset_game();
+        throw "reset";
+      }
+      else {
+      this.columns[col][row] = "pipe";
       }
     }
   },
@@ -113,9 +118,15 @@ var game = {
   },
 
   loop: function() {
-    this.move_pipes_up();
-    this.time = Math.max(this.time - 10, 480);
-    setTimeout(function () { game.loop(); }, this.time);
+    try {
+      this.move_pipes_up();
+      this.time = Math.max(this.time - 10, 480);
+      setTimeout(function () { game.loop(); }, this.time);
+    } catch (m) {
+      if (m === "reset") {
+        setTimeout(function () { game.loop(); }, this.time);
+      }
+    }
   }
 };
 
