@@ -130,11 +130,8 @@ var game = {
   loop: function() {
     try {
       this.move_pipes_up();
-      this.time = Math.max(this.time - 5, 480);
+      this.time = Math.max(this.time - 10, 480);
       this.score_count++;
-      if (this.score_count % 3 === 0) {
-        this.score++;
-      }
       setTimeout(function () { game.loop(); }, this.time);
     } catch (m) {
       if (m === "reset") {
