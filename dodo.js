@@ -1,6 +1,7 @@
 var game = {
   time: 1000,
   score: 0,
+  score_count: -3,
   dodo_pos: 4,
   pipe_pos: [null, null, null, null, null, null, null, null],
 
@@ -114,6 +115,7 @@ var game = {
   reset_game: function() {
     this.time = 1000;
     this.score = 0;
+    this.score_count = 0;
     this.pipe_pos = [null, null, null, null, null, null, null, null];
     this.move_pipes_up();
   },
@@ -122,7 +124,10 @@ var game = {
     try {
       this.move_pipes_up();
       this.time = Math.max(this.time - 5, 480);
-      this.score++;
+      this.score_count++;
+      if (this.score_count % 3 === 0) {
+        this.score++;
+      }
       setTimeout(function () { game.loop(); }, this.time);
     } catch (m) {
       if (m === "reset") {
