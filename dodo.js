@@ -1,14 +1,12 @@
-// move pipes
-// randomly generate pipes in correct position
 // collision
-// reset on collision
-// show score?
+// show score
 
 
 var game = {
   time: 1000,
   dodo_pos: 4,
   pipe_pos: [null, null, null, null, null, null, null, null],
+
   columns: [[null, null, null, null, null, null, null, null],
             [null, null, null, null, null, null, null, null],
             [null, null, null, null, null, null, null, null],
@@ -21,6 +19,9 @@ var game = {
 
   move_dodo_left: function () {
     var i = this.dodo_pos;
+    if (this.columns[i - 1][6] == "pipe") {
+      this.reset_game();
+    }
     this.columns[i][6] = null;
     this.columns[i - 1][6] = "dodo";
     this.dodo_pos = i - 1;
@@ -29,6 +30,9 @@ var game = {
 
   move_dodo_right: function () {
     var i = this.dodo_pos;
+    if (this.columns[i + 1][6] == "pipe") {
+      this.reset_game();
+    }
     this.columns[i][6] = null;
     this.columns[i + 1][6] = "dodo";
     this.dodo_pos = i + 1;
@@ -53,9 +57,15 @@ var game = {
   add_pipe: function (row, size) {
     for (var col = 0; col < size; col++) {
       this.columns[col][row] = "pipe";
+      if (this.columns[col][row] === "dodo") {
+        this.reset_game();
+      }
     }
     for (var col = size + 2; col < this.columns[0].length + 1; col++) {
       this.columns[col][row] = "pipe";
+      if (this.columns[col][row] === "dodo") {
+        this.reset_game();
+      }
     }
   },
 
@@ -96,11 +106,16 @@ var game = {
     }
   },
 
+  reset_game: function() {
+    this.time = 1000;
+    this.pipe_pos = [null, null, null, null, null, null, null, null];
+    this.move_pipes_up();
+  },
+
   loop: function() {
     this.move_pipes_up();
-    setTimeout(function () {
-      game.loop();
-    }, this.time);
+    this.time = Math.max(this.time - 10, 480);
+    setTimeout(function () { game.loop(); }, this.time);
   }
 };
 
@@ -118,8 +133,6 @@ $(document).keydown(function (e) {
   }
   e.preventDefault(); // prevent the default action (scroll / move caret)
 });
-
-setInterval(function() { game.time = Math.max(game.time - 20, 480) }, 2800);
 
 game.loop();
 
