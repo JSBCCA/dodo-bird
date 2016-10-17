@@ -1,7 +1,6 @@
-// show score
-
 var game = {
   time: 1000,
+  score: 0,
   dodo_pos: 4,
   pipe_pos: [null, null, null, null, null, null, null, null],
 
@@ -98,6 +97,8 @@ var game = {
           $(kid).attr("src", this.image_for(this.columns[i][j]));
       }
     }
+    var your_score = document.getElementById("score");
+    score.innerText = game.score;
   },
 
   image_for: function(value) {
@@ -112,6 +113,7 @@ var game = {
 
   reset_game: function() {
     this.time = 1000;
+    this.score = 0;
     this.pipe_pos = [null, null, null, null, null, null, null, null];
     this.move_pipes_up();
   },
@@ -119,7 +121,8 @@ var game = {
   loop: function() {
     try {
       this.move_pipes_up();
-      this.time = Math.max(this.time - 10, 480);
+      this.time = Math.max(this.time - 5, 480);
+      this.score++;
       setTimeout(function () { game.loop(); }, this.time);
     } catch (m) {
       if (m === "reset") {
