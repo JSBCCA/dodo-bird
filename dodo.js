@@ -1,7 +1,6 @@
 var game = {
   time: 1000,
   score: 0,
-  score_count: -3,
   dodo_pos: 4,
   pipe_pos: [null, null, null, null, null, null, null, null],
 
@@ -73,6 +72,13 @@ var game = {
     }
   },
 
+  add_score: function() {
+    var i = this.dodo_pos;
+    if ((this.columns[i + 1][6] === 'pipe') || (this.columns[i - 1][6] === 'pipe')) {
+      this.score++;
+    }
+  },
+
   update_column_pipes: function() {
     for (var row = 0; row < this.columns[0].length; row++) {
       if (this.pipe_pos[row] < 1) {
@@ -98,6 +104,7 @@ var game = {
           $(kid).attr("src", this.image_for(this.columns[i][j]));
       }
     }
+    game.add_score();
     var your_score = document.getElementById("score");
     score.innerText = game.score;
   },
@@ -115,7 +122,6 @@ var game = {
   reset_game: function() {
     this.time = 1000;
     this.score = 0;
-    this.score_count = 0;
     this.pipe_pos = [null, null, null, null, null, null, null, null];
     this.move_pipes_up();
   },
