@@ -3,7 +3,7 @@ var game = {
   score: 0,
   high_score: 0,
   dodo_pos: 4,
-  pipe_pos: [null, null, null, null, null, null, null, null],
+  spike_pos: [null, null, null, null, null, null, null, null],
 
   columns: [[null, null, null, null, null, null, null, null],
             [null, null, null, null, null, null, null, null],
@@ -17,7 +17,7 @@ var game = {
 
   move_dodo_left: function () {
     var i = this.dodo_pos;
-    if (this.columns[i - 1][6] == "pipe") {
+    if (this.columns[i - 1][6] == "spike") {
       this.reset_game();
     }
     this.columns[i][6] = null;
@@ -28,7 +28,7 @@ var game = {
 
   move_dodo_right: function () {
     var i = this.dodo_pos;
-    if (this.columns[i + 1][6] == "pipe") {
+    if (this.columns[i + 1][6] == "spike") {
       this.reset_game();
     }
     this.columns[i][6] = null;
@@ -37,29 +37,29 @@ var game = {
     this.draw();
   },
 
-  generate_pipe: function() {
-    if (this.pipe_pos[0] === null && this.pipe_pos[1] === null) {
+  generate_spike: function() {
+    if (this.spike_pos[0] === null && this.spike_pos[1] === null) {
       return 1 + Math.floor(Math.random() * 6);
     } else {
       return null;
     }
   },
 
-  clear_pipe: function (row) {
+  clear_spike: function (row) {
     for (var col = 0; col < this.columns.length; col++) {
-      if (this.columns[col][row] == "pipe")
+      if (this.columns[col][row] == "spike")
         this.columns[col][row] = null;
     }
   },
 
-  add_pipe: function (row, size) {
+  add_spike: function (row, size) {
     for (var col = 0; col < size; col++) {
       if (this.columns[col][row] === "dodo") {
         this.reset_game();
         throw "reset";
       }
       else {
-      this.columns[col][row] = "pipe";
+      this.columns[col][row] = "spike";
       }
     }
     for (var col = size + 2; col < this.columns[0].length + 1; col++) {
@@ -68,33 +68,33 @@ var game = {
         throw "reset";
       }
       else {
-      this.columns[col][row] = "pipe";
+      this.columns[col][row] = "spike";
       }
     }
   },
 
   add_score: function() {
     var i = this.dodo_pos;
-    if (( i < (this.columns.length - 1) && this.columns[i + 1][6] === 'pipe')
-        || ( i > 0 && this.columns[i - 1][6] === 'pipe')) {
+    if (( i < (this.columns.length - 1) && this.columns[i + 1][6] === 'spike')
+        || ( i > 0 && this.columns[i - 1][6] === 'spike')) {
       this.score++;
     }
   },
 
-  update_column_pipes: function() {
+  update_column_spikes: function() {
     for (var row = 0; row < this.columns[0].length; row++) {
-      if (this.pipe_pos[row] < 1) {
-        this.clear_pipe(row);
+      if (this.spike_pos[row] < 1) {
+        this.clear_spike(row);
       } else {
-        this.add_pipe(row, this.pipe_pos[row]);
+        this.add_spike(row, this.spike_pos[row]);
       }
     }
   },
 
-  move_pipes_up: function () {
-    this.pipe_pos.pop();
-    this.pipe_pos.unshift(this.generate_pipe());
-    this.update_column_pipes();
+  move_spikes_up: function () {
+    this.spike_pos.pop();
+    this.spike_pos.unshift(this.generate_spike());
+    this.update_column_spikes();
     this.draw();
   },
 
@@ -116,8 +116,8 @@ var game = {
   image_for: function(value) {
     if (value === "dodo") {
       return "img/dodo.png";
-    } else if (value === "pipe") {
-      return "img/pipe.png";
+    } else if (value === "spike") {
+      return "img/gordo.png";
     } else {
       return "img/blue.png";
     }
@@ -129,13 +129,13 @@ var game = {
       this.high_score = this.score;
     }
     this.score = 0;
-    this.pipe_pos = [null, null, null, null, null, null, null, null];
-    this.move_pipes_up();
+    this.spike_pos = [null, null, null, null, null, null, null, null];
+    this.move_spikes_up();
   },
 
   loop: function() {
     try {
-      this.move_pipes_up();
+      this.move_spikes_up();
       this.time = Math.max(this.time - 10, 480);
       this.score_count++;
       setTimeout(function () { game.loop(); }, this.time);
