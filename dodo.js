@@ -1,6 +1,7 @@
 var game = {
   time: 1000,
   score: 0,
+  high_score: 0,
   dodo_pos: 4,
   pipe_pos: [null, null, null, null, null, null, null, null],
 
@@ -107,7 +108,9 @@ var game = {
     }
     game.add_score();
     var your_score = document.getElementById("score");
-    score.innerText = game.score;
+    your_score.innerText = game.score;
+    var your_high_score = document.getElementById("high_score");
+    your_high_score.innerText = game.high_score;
   },
 
   image_for: function(value) {
@@ -122,6 +125,9 @@ var game = {
 
   reset_game: function() {
     this.time = 1000;
+    if (this.score > this.high_score) {
+      this.high_score = this.score;
+    }
     this.score = 0;
     this.pipe_pos = [null, null, null, null, null, null, null, null];
     this.move_pipes_up();
