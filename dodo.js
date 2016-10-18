@@ -163,4 +163,3 @@ $(document).keydown(function (e) {
 });
 
 game.loop();
-
