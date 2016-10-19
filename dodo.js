@@ -47,7 +47,7 @@ var game = {
 
   clear_pipe: function (row) {
     for (var col = 0; col < this.columns.length; col++) {
-      if (this.columns[col][row] == "pipe")
+      if (this.columns[col][row] !== "dodo")
         this.columns[col][row] = null;
     }
   },
@@ -55,7 +55,6 @@ var game = {
   add_pipe: function (row, size) {
     for (var col = 0; col < size; col++) {
       if (this.columns[col][row] === "dodo") {
-        this.reset_game();
         throw "reset";
       }
       else {
@@ -64,7 +63,6 @@ var game = {
     }
     for (var col = size + 2; col < this.columns[0].length + 1; col++) {
       if (this.columns[col][row] === "dodo") {
-        this.reset_game();
         throw "reset";
       }
       else {
@@ -95,7 +93,6 @@ var game = {
     this.pipe_pos.pop();
     this.pipe_pos.unshift(this.generate_pipe());
     this.update_column_pipes();
-    this.draw();
   },
 
   draw: function () {
@@ -130,6 +127,7 @@ var game = {
     }
     this.score = 0;
     this.pipe_pos = [null, null, null, null, null, null, null, null];
+    this.update_column_pipes();
     this.move_pipes_up();
   },
 
@@ -141,9 +139,11 @@ var game = {
       setTimeout(function () { game.loop(); }, this.time);
     } catch (m) {
       if (m === "reset") {
+        this.reset_game();
         setTimeout(function () { game.loop(); }, this.time);
       }
     }
+    this.draw();
   }
 };
 
